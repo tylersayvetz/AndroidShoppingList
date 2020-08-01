@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Shopping List</string>
+    <string name="iced_coffee_label">Iced Coffee</string>
+    <string name="carrot_juice_label">Carrot Juice</string>
+    <string name="odwalla_label">Odwalla</string>
+    <string name="lemonade_label">Lemonade</string>
+</resources>
