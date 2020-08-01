@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         LinearLayout layout = findViewById(R.id.linearLayout);
 
+        ViewModelProvider modelProvider = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory());
+        DrinkModel model = modelProvider.get(DrinkModel.class);
+
         if (intent != null) {
             String newItem = intent.getStringExtra("itemName");
             if ( newItem != null) {
@@ -40,28 +43,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        ViewModelProvider.Factory factory = new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return null;
-            }
-        };
-
-        DrinkModel model = new ViewModelProvider(this.getViewModelStore(), factory).get(DrinkModel.class);
-
         model.getDrinks().observe(this, new Observer<List<Drink>>() {
             @Override
             public void onChanged(List<Drink> drinks) {
                 Log.d("IN", "got here");
                 LinearLayout layout = findViewById(R.id.linearLayout);
+                if (drinks != null) {
+                    for (int i = 0; i < drinks.size(); i++) {
+                        TextView tv = new TextView(MainActivity.this);
+                        Drink drink = drinks.get(i);
+                        tv.setText(drink.name);
 
-                for (int i = 0; i < drinks.size(); i++) {
-                    TextView tv = new TextView(MainActivity.this);
-                    Drink drink = drinks.get(i);
-                    tv.setText(drink.name);
-
-                    layout.addView(tv);
+                        layout.addView(tv);
+                    }
                 }
             }
         });
